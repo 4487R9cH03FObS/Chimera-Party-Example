@@ -1,0 +1,168 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Resource",
+"class": "Config",
+"language": "GDScript",
+"path": "res://scripts/Config.gd"
+} ]
+_global_script_class_icons={
+"Config": ""
+}
+
+[application]
+
+config/name="ChimeraPartyExample"
+run/main_scene="res://games/FlowerLab/index.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Party="*res://scripts/Party.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/test_width=1280
+window/size/test_height=720
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/hdr_mode": 0,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d": true,
+"flags/anisotropic": false,
+"flags/filter": false,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 2,
+"process/HDR_as_SRGB": false,
+"process/fix_alpha_border": true,
+"process/invert_color": false,
+"process/premult_alpha": false,
+"size_limit": 0,
+"stream": false,
+"svg/scale": 1.0
+}
+
+[input]
+
+move_left_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_right_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_up_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_down_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+action_a_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+action_b_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_left_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_right_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_up_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_down_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+action_a_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+action_b_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_left_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_right_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_up_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_down_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+action_a_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+action_b_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_left_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_right_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_up_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+move_down_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+action_a_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+action_b_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+
+[physics]
+
+2d/default_gravity=0
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
