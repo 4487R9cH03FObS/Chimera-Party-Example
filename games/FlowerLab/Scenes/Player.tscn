@@ -5,13 +5,15 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 25.7453
-height = 34.8869
+height = 10.5044
 
 [sub_resource type="OccluderPolygon2D" id=2]
 polygon = PoolVector2Array( -27.3776, 22.5555, -0.235012, -31.4661, 29.2792, 22.0285 )
 
 [node name="Player" type="RigidBody2D"]
 mode = 2
+contacts_reported = 3
+contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -24,3 +26,4 @@ shape = SubResource( 1 )
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2( 0.510162, -0.0670128 )
 occluder = SubResource( 2 )
+[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]

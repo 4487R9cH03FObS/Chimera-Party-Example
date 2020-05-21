@@ -38,19 +38,34 @@ func external_event_changer(number):
 func _event_launcher():
 	var time = null
 	
+	print("evento: "+str(event_no))
+	
 	match event_no:
 		0:
 			print("ready??")
-			time = 10
+			time = 5
 		1:
-			print("initial asteroid belt")
+			emit_signal("array_placed_asteroids",[-700,-300,300,700],1)
+			time = 5
+		2:
+			emit_signal("simetric_random_asteroids")
+			time = 20
+		3:
+			emit_signal("normal_random_asteroids")
+			time = 10
+		4:
+			emit_signal("array_placed_asteroids",[-100,-200,200,100],1)
+			time = 10
+		5:
+			emit_signal("simetric_random_asteroids")
+			time = 20
+		6:
+			emit_signal("normal_random_asteroids")
+			time = 10
+		7:
 			emit_signal("simetric_random_asteroids")
 			time = 10
-		2:
-			print("second asteroid belt")
-			emit_signal("normal_random_asteroids")
-			time = 30
-		_: 
+		_:
 			_end_times()
 	
 	return time
@@ -58,22 +73,11 @@ func _event_launcher():
 func _end_times():
 	events_ended = 1
 	print("events_ended")
-
-# warning-ignore:unused_signal
+	
 signal simetric_random_asteroids
 signal normal_random_asteroids
-signal event3
-# warning-ignore:unused_signal
-signal event4
-# warning-ignore:unused_signal
-signal event5
-# warning-ignore:unused_signal
-signal event6
-# warning-ignore:unused_signal
-signal event7
-# warning-ignore:unused_signal
-signal event8
-# warning-ignore:unused_signal
-signal event9
-# warning-ignore:unused_signal
-signal event10
+signal place_asteroids
+signal simetric_placed_asteroids
+signal array_placed_asteroids
+signal halt_asteroids
+signal restart_asteroids

@@ -1,18 +1,20 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://games/FlowerLab/index.gd" type="Script" id=1]
 [ext_resource path="res://games/FlowerLab/Sprites/Dark15.png" type="Texture" id=2]
-[ext_resource path="res://games/FlowerLab/Background.gd" type="Script" id=3]
-[ext_resource path="res://games/FlowerLab/Spawn.gd" type="Script" id=4]
-[ext_resource path="res://games/FlowerLab/EventManager.gd" type="Script" id=5]
+[ext_resource path="res://games/FlowerLab/Scripts/Background.gd" type="Script" id=3]
+[ext_resource path="res://games/FlowerLab/Scripts/Spawn.gd" type="Script" id=4]
+[ext_resource path="res://games/FlowerLab/Scripts/EventManager.gd" type="Script" id=5]
 [ext_resource path="res://games/FlowerLab/Audio/bass background.wav" type="AudioStream" id=6]
+[ext_resource path="res://games/FlowerLab/Scripts/SoundManager.gd" type="Script" id=7]
+[ext_resource path="res://games/FlowerLab/Audio/collision sound.wav" type="AudioStream" id=8]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Background" type="Sprite" parent="."]
 modulate = Color( 0.239216, 0.239216, 0.239216, 1 )
-position = Vector2( 960, 540 )
+position = Vector2( -745.256, 982.458 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 script = ExtResource( 3 )
@@ -22,19 +24,19 @@ script = ExtResource( 3 )
 [node name="Positions" type="Node2D" parent="."]
 
 [node name="Position2D" type="Position2D" parent="Positions"]
-position = Vector2( 720, 300 )
+position = Vector2( 384, 800 )
 
 [node name="Position2D2" type="Position2D" parent="Positions"]
-position = Vector2( 1200, 300 )
+position = Vector2( 768, 800 )
 
 [node name="Position2D3" type="Position2D" parent="Positions"]
-position = Vector2( 1200, 780 )
+position = Vector2( 1152, 800 )
 
 [node name="Position2D4" type="Position2D" parent="Positions"]
-position = Vector2( 720, 780 )
+position = Vector2( 1536, 800 )
 
 [node name="SpawnCenter" type="Position2D" parent="Positions"]
-position = Vector2( 934.676, 569.467 )
+position = Vector2( 960, 0 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 100.0
@@ -60,9 +62,8 @@ __meta__ = {
 }
 
 [node name="GUI" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -159,16 +160,19 @@ size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
 
 [node name="SoundManager" type="Node" parent="."]
+script = ExtResource( 7 )
 
 [node name="Music" type="Node" parent="SoundManager"]
 
-[node name="SFx" type="Node" parent="SoundManager"]
+[node name="SFX" type="Node" parent="SoundManager"]
 
-[node name="Enviroment" type="Node" parent="SoundManager"]
+[node name="playerCollision" type="AudioStreamPlayer" parent="SoundManager/SFX"]
+stream = ExtResource( 8 )
 
-[node name="vacuumsound" type="AudioStreamPlayer2D" parent="SoundManager/Enviroment"]
+[node name="Environment" type="Node" parent="SoundManager"]
+
+[node name="VacuumStart" type="AudioStreamPlayer2D" parent="SoundManager/Environment"]
 stream = ExtResource( 6 )
-autoplay = true
 
 [node name="Spawn" type="Node2D" parent="."]
 script = ExtResource( 4 )
@@ -182,7 +186,13 @@ script = ExtResource( 5 )
 
 [node name="customTimer" type="Timer" parent="EventManager"]
 one_shot = true
+[connection signal="finished" from="SoundManager/Environment/VacuumStart" to="SoundManager" method="_auto_play_environment"]
 [connection signal="timeout" from="Spawn/Timer" to="Spawn" method="_on_Timer_timeout"]
+[connection signal="array_placed_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_array_placed_asteroids"]
+[connection signal="halt_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_halt_asteroids"]
 [connection signal="normal_random_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_normal_random_asteroids"]
+[connection signal="place_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_place_asteroids"]
+[connection signal="restart_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_restart_asteroids"]
+[connection signal="simetric_placed_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_simetric_placed_asteroids"]
 [connection signal="simetric_random_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_simetric_random_asteroids"]
 [connection signal="timeout" from="EventManager/customTimer" to="EventManager" method="_its_timeout"]

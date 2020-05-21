@@ -8,34 +8,46 @@ export (float,0,1000) var spawnheight = 200
 #onready var spawnCenter = get_node(spawnCenterPath) as Position2D
 
 onready var spawnCenter = Vector2(0,-spawnheight)
+var _spawn_place = 0
+var _spawn_array = []
 
 var rng = RandomNumberGenerator.new()
 
 func _ready():
 	spawnCenter.x = get_node("../Positions/SpawnCenter").position.x
 
-enum spawn_mode {randomized, randomized_mirrored, dreadnaught}
-var current_spawn_mode = null
-onready var time_between_spawns = $Timer.wait_time
+enum spawn_mode\
+{randomized,\
+randomized_mirrored,\
+placed,\
+placed_mirrored,\
+array}
+
+var _current_spawn_mode = null
+onready var _time_between_spawns = $Timer.wait_time
 
 func spawn_manager():
-	if current_spawn_mode == null:
+	if _current_spawn_mode == null:
 		print("stopped spawning")
 		return
 	
-	$Timer.wait_time = time_between_spawns
+	$Timer.wait_time = _time_between_spawns
 	
-	match current_spawn_mode:
+	match _current_spawn_mode:
 		spawn_mode.randomized:
 			spawn_randomized()
-			$Timer.start()
 		spawn_mode.randomized_mirrored:
 			spawn_randomized_mirrored()
-			$Timer.start()
-		spawn_mode.dreadnaught:
-			spawn_in(-400)
-			
-	pass
+		spawn_mode.placed:
+			spawn_in(_spawn_place)
+		spawn_mode.placed_mirrored:
+			spawn_in(_spawn_place)
+			spawn_in(-_spawn_place)
+		spawn_mode.array:
+			for place in _spawn_array:
+				spawn_in(place)
+	$Timer.start()
+
 
 func spawn_randomized_mirrored():
 	var new_asteroid_left = asteroid0.instance()
@@ -87,18 +99,63 @@ func _on_Timer_timeout():
 func _stop():
 	$Timer.stop()
 
-export (float,0,2,0.1) var time_between_randomized_mirrored = 0.8
-export (float,0,2,0.1) var time_between_randomized_normal   = 0.4
+func _start():
+	spawn_manager()
+
+export (float,0,2,0.1) var time_between_randomized_mirrored = 0.7
+export (float,0,2,0.1) var time_between_randomized_normal   = 0.3
+export (float,0,2,0.1) var time_between_placed_normal     = 0.3
+export (float,0,2,0.1) var time_between_placed_simetric   = 0.6
 
 func _on_EventManager_normal_random_asteroids():
-	_stop()
-	current_spawn_mode = spawn_mode.randomized
-	time_between_spawns = time_between_randomized_normal
-	spawn_manager()
-	pass # Replace with function body.
+	_pattern_change(spawn_mode.randomized,
+	time_between_randomized_normal)
 
 func _on_EventManager_simetric_random_asteroids():
+	_pattern_change(\
+	spawn_mode.randomized_mirrored,\
+	time_between_randomized_mirrored)
+
+func _on_EventManager_place_asteroids(place):
+	_pattern_change(spawn_mode.placed,\
+	null,\
+	place)
+
+func _on_EventManager_array_placed_asteroids(array,time):
+	_set_spawn_array(array)
+	_pattern_change(spawn_mode.array,time)
+
+
+func _on_EventManager_simetric_placed_asteroids(place):
+	_pattern_change(spawn_mode.placed_mirrored,\
+	null,\
+	place)
+
+func _pattern_change(mode,time_interval=null,place=null):
 	_stop()
-	current_spawn_mode = spawn_mode.randomized_mirrored
-	time_between_spawns = time_between_randomized_mirrored
+	if mode!=null:
+		_set_mode(mode)
+	if time_interval!=null:
+		_set_time_interval(time_interval)
+	if place!=null:
+		_set_place(place)
 	spawn_manager()
+
+func _set_place(place):
+	if place!=null:
+		_spawn_place = place
+
+func _set_mode(mode):
+	_current_spawn_mode = mode
+
+func _set_time_interval(time_interval):
+	_time_between_spawns = time_interval
+
+func _set_spawn_array(array):
+	_spawn_array = array
+
+func _on_EventManager_halt_asteroids():
+	_stop()
+
+func _on_EventManager_restart_asteroids():
+	_start()

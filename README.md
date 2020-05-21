@@ -2,23 +2,24 @@
  
 ## Avances
 
-* Implementadas las físicas de los juegadores
+* nodo que maneja eventos del juego mediante señales
+* Orquestra de spawning
+
+* Player
+	* Desgaste de HP a través de colisiones
+	* Implementadas las físicas de los juegadores
 
 ## To Do
-
-* FSM que maneja eventos del juego
-
-* Orquestra de spawning
 
 * Dreadnaught:
 	* Ataques
 	* Coreografía
 
 * Sonidos
+	* añadir funcionalidad al manager.
 	* SFX
 	* Música
 	* Entorno
-	* Conectar señales
 
 * Sprites
 	* Jugadores
@@ -26,7 +27,6 @@
 	* Dreadnaught
 
 * Player:
-	* Desgaste de HP a través de colisiones
 	* Death
 	* ejercer impulso en choque
 

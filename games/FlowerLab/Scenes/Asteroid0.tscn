@@ -4,10 +4,10 @@
 [ext_resource path="res://games/FlowerLab/Scenes/Body.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 8.48693
+radius = 10.0554
 
 [sub_resource type="OccluderPolygon2D" id=2]
-polygon = PoolVector2Array( -9.84121, 0.216946, 0.126488, 9.75745, 9.80939, -0.210241, -0.0159111, -9.75075 )
+polygon = PoolVector2Array( -3.88437, 5.92585, -2.25459, 5.87252, -2.3697, 7.28274, 2.66811, 7.22942, 2.44722, 5.71474, 4.49834, 5.71474, 4.50944, 4.69518, 5.58234, 4.72673, 5.51923, 3.59073, 6.4659, 3.59073, 6.56056, 1.31872, 7.66501, 1.35027, 7.6019, -2.15241, 6.33968, -2.18397, 6.27656, -4.2982, 5.23523, -4.32975, 5.36145, -5.46576, 4.44633, -5.4342, 4.47789, -6.38088, 2.47877, -6.30798, 2.35255, -7.41243, -2.25459, -7.38088, -2.41236, -6.4342, -4.23149, -6.38088, -4.38927, -5.21332, -5.20971, -5.30798, -5.17816, -4.36131, -6.31416, -4.39287, -6.06172, -2.40486, -7.26083, -2.24708, -7.3555, 2.10761, -6.12483, 2.0445, -6.25105, 4.12717, -5.02038, 4.00095, -5.1466, 5.1054, -3.91593, 5.13696 )
 
 [node name="Body" instance=ExtResource( 2 )]
 mass = 1000.0
@@ -15,14 +15,15 @@ contacts_reported = 3
 contact_monitor = true
 
 [node name="Sprite" parent="." index="0"]
-scale = Vector2( 10, 10 )
+scale = Vector2( 5, 5 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape" parent="." index="1"]
-scale = Vector2( 10, 10 )
+scale = Vector2( 4, 4 )
 shape = SubResource( 1 )
 
 [node name="LightOccluder2D" parent="." index="2"]
-scale = Vector2( 10, 10 )
+position = Vector2( -0.157776, -0.15778 )
+scale = Vector2( 5, 5 )
 occluder = SubResource( 2 )
 [connection signal="body_entered" from="." to="." method="_on_Body_body_entered"]
