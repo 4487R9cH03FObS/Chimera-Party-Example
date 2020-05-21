@@ -108,3 +108,4 @@ func _is_out_of_bounds():
 	return !\
 	(position.x>=lower_bounds.x) and (position.x<=upper_bounds.x) and\
 	(position.y>=lower_bounds.y) and (position.y<=upper_bounds.y)
+

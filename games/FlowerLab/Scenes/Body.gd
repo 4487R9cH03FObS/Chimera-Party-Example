@@ -8,3 +8,8 @@ func _process(delta):
 
 func _die():
 	get_parent().remove_child(self)
+
+func _on_Body_body_entered(body):
+	print("entered")
+	if "_health" in body:
+		print("its mortal")

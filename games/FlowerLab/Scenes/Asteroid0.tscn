@@ -10,7 +10,9 @@ radius = 8.48693
 polygon = PoolVector2Array( -9.84121, 0.216946, 0.126488, 9.75745, 9.80939, -0.210241, -0.0159111, -9.75075 )
 
 [node name="Body" instance=ExtResource( 2 )]
-mass = 300.0
+mass = 1000.0
+contacts_reported = 3
+contact_monitor = true
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2( 10, 10 )
@@ -23,3 +25,4 @@ shape = SubResource( 1 )
 [node name="LightOccluder2D" parent="." index="2"]
 scale = Vector2( 10, 10 )
 occluder = SubResource( 2 )
+[connection signal="body_entered" from="." to="." method="_on_Body_body_entered"]

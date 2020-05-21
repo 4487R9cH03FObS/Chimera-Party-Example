@@ -4,7 +4,7 @@
 [ext_resource path="res://games/FlowerLab/Sprites/Dark15.png" type="Texture" id=2]
 [ext_resource path="res://games/FlowerLab/Background.gd" type="Script" id=3]
 [ext_resource path="res://games/FlowerLab/Spawn.gd" type="Script" id=4]
-[ext_resource path="res://games/FlowerLab/Scenes/DreathNaught.tscn" type="PackedScene" id=5]
+[ext_resource path="res://games/FlowerLab/EventManager.gd" type="Script" id=5]
 [ext_resource path="res://games/FlowerLab/Audio/bass background.wav" type="AudioStream" id=6]
 
 [node name="Main" type="Node2D"]
@@ -37,9 +37,8 @@ position = Vector2( 720, 780 )
 position = Vector2( 934.676, 569.467 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 100.0
 one_shot = true
-autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -111,22 +110,21 @@ margin_bottom = 1080.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 6.0
 
-[node name="ColorRect" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
+[node name="supCent" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
 margin_right = 1434.0
 margin_bottom = 76.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
 color = Color( 0, 0, 0, 1 )
 
-[node name="ColorRect2" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
+[node name="gameplay" type="VBoxContainer" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
 margin_top = 80.0
 margin_right = 1434.0
 margin_bottom = 998.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 6.0
-color = Color( 0, 0, 0, 0 )
 
-[node name="ColorRect3" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
+[node name="infCent" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
 margin_top = 1002.0
 margin_right = 1434.0
 margin_bottom = 1080.0
@@ -140,20 +138,20 @@ margin_right = 1920.0
 margin_bottom = 1080.0
 size_flags_horizontal = 3
 
-[node name="ColorRect" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="supDer" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
 margin_right = 239.0
 margin_bottom = 357.0
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
 
-[node name="ColorRect2" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="centDer" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
 margin_top = 361.0
 margin_right = 239.0
 margin_bottom = 718.0
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
 
-[node name="ColorRect3" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
+[node name="infCent" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
 margin_top = 722.0
 margin_right = 239.0
 margin_bottom = 1080.0
@@ -168,7 +166,7 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="Enviroment" type="Node" parent="SoundManager"]
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SoundManager/Enviroment"]
+[node name="vacuumsound" type="AudioStreamPlayer2D" parent="SoundManager/Enviroment"]
 stream = ExtResource( 6 )
 autoplay = true
 
@@ -179,6 +177,12 @@ script = ExtResource( 4 )
 wait_time = 2.0
 one_shot = true
 
-[node name="DreathNaught" parent="." instance=ExtResource( 5 )]
-position = Vector2( 993.188, 390.426 )
+[node name="EventManager" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="customTimer" type="Timer" parent="EventManager"]
+one_shot = true
 [connection signal="timeout" from="Spawn/Timer" to="Spawn" method="_on_Timer_timeout"]
+[connection signal="normal_random_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_normal_random_asteroids"]
+[connection signal="simetric_random_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_simetric_random_asteroids"]
+[connection signal="timeout" from="EventManager/customTimer" to="EventManager" method="_its_timeout"]

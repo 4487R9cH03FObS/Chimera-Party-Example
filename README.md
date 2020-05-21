@@ -28,13 +28,16 @@
 * Player:
 	* Desgaste de HP a través de colisiones
 	* Death
+	* ejercer impulso en choque
 
 * Ataques:
 	* Laser:
 		area2d con auto free al salir de la pantalla
 	* Bullet:
 		rigid body 2d con autofree
-	** WideBeam Dreadnaught:
+	* WideBeam Dreadnaught:
 		"" raycast desde player a dreadnaught.
+
+* Sistema de Puntajes
 
 ## Discusiones del Futuro

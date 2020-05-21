@@ -5,6 +5,8 @@ var Player = preload("res://games/FlowerLab/Scenes/Player.tscn")
 onready var Players = $Players
 var players
 
+onready var gameplay_screen = get_node("GUI/MarginContainer/HBoxContainer/VBoxContainer3/gameplay")
+
 func _ready():
 	Party.load_test()
 	players = Party.get_players()
