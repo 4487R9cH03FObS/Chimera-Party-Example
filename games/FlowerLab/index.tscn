@@ -203,7 +203,6 @@ one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 1021.19, 606.331 )
-current = true
 zoom = Vector2( 2, 2 )
 [connection signal="finished" from="SoundManager/Environment/VacuumStart" to="SoundManager" method="_auto_play_environment"]
 [connection signal="timeout" from="Spawn/Timer" to="Spawn" method="_on_Timer_timeout"]
