@@ -7,31 +7,44 @@ var player_index
 var player_color
 
 # Inputs
-var move_left = ""
+var move_left  = ""
 var move_right = ""
-var move_up = ""
-var move_down = ""
-var action_a = ""
-var action_b = ""
+var move_up    = ""
+var move_down  = ""
+var action_a   = ""
+var action_b   = ""
 
 ## Initial settings
 
+onready var main = get_parent().get_parent()
 onready var soundManager=get_parent().get_parent().get_node("SoundManager")
+
 func _ready():
 	self.connect("sfx_request",soundManager,"_on_sfx_request")
+	self.connect("score_growth",get_parent().get_parent(),"_on_player_score_growth")
+	self.connect("player_died",get_parent().get_parent(),"_on_player_death")
+	$TextureProgress.max_value = _max_health
 	linear_damp = damp
+	var bound_node = main.get_node(\
+	"GUI/MarginContainer/HBoxContainer/VBoxContainer3/gameplay")
+	var upleft = bound_node.get_global_position()
+	s_lower_bounds = upleft
+	s_upper_bounds = upleft + Vector2(\
+	bound_node.margin_right,\
+	bound_node.margin_bottom-bound_node.margin_top)
+
 
 func init(player_index, player_color):
 	self.player_index = player_index
 	self.player_color = player_color
 	$Sprite.modulate = Party.available_colors[player_color]
 	var spi = str(player_index)
-	move_left = "move_left_" + spi
+	move_left  = "move_left_" + spi
 	move_right = "move_right_" + spi
-	move_up = "move_up_" + spi
-	move_down = "move_down_" + spi
-	action_a = "action_a_" + spi
-	action_b = "action_b_" + spi
+	move_up    = "move_up_" + spi
+	move_down  = "move_down_" + spi
+	action_a   = "action_a_" + spi
+	action_b   = "action_b_" + spi
 
 ## Main Processes
 
@@ -49,8 +62,15 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed(action_a):
 		$Sprite.flip_v = !$Sprite.flip_v
 	
+	if _is_somewhat_out_of_bounds():
+		emit_signal("somewhat_out_of_bounds")
+		_take_damage(10*delta)
+	
 	if _is_out_of_bounds():
+		emit_signal("out_of_bounds")
 		die()
+	
+	_score_counter(delta)
 
 ### Physics
 
@@ -78,6 +98,7 @@ func get_target_acceleration():
 		_ddx.y=-1
 	if Input.is_action_pressed(move_down):
 		_ddx.y=1
+	_ddx = _ddx.normalized()
 	_dx.x += _d_multiplier*_ddx.x 
 	_dx.y += _d_multiplier*_ddx.y 
 	target_acceleration = _dx*top_acceleration
@@ -88,7 +109,8 @@ func get_target_acceleration():
 
 export (float) var _max_health    = 100
 onready var _health = _max_health
-signal health_updated(health)
+signal health_updated # float
+
 #### Health
 
 func _set_health(value):
@@ -99,20 +121,26 @@ func _set_health(value):
 		if _health <= 0:
 			die()
 
+onready var health_bar   = $TextureProgress
+onready var health_tween = $Tween
+func _on_health_update(health):
+	health_bar.value = health
+	
 #### Damage
-signal killed
 export (float,0,100,5)   var chip_damage_collision = 10
 export (float,0,100,0.1) var bound_on_external_damage = 70
+signal took_damage
 var damage_potential = 10
 var rebote  = 10
 
 func _take_damage(value):
 	_set_health(_health-value)
 	emit_signal("took_damage",value)
+	_sound_emiter(sound.chip_damage,70)
 
 func _on_Player_body_entered(body):
 	
-	print(body.get_class())
+	#print(body.get_class())
 	#various cases
 	if body.get_class() == "RigidBody2D" and "damage_potential" in body:
 		var relative_velocity = self.linear_velocity - body.linear_velocity
@@ -122,38 +150,79 @@ func _on_Player_body_entered(body):
 		damage = clamp(damage,0,bound_on_external_damage)
 		_sound_emiter(sound.collision,damage)
 		_take_damage(damage)
-		print(self.get_name() + "suffered: " + str(damage))
+		#print(self.get_name() + "suffered: " + str(damage))
 		if "player_color" in body:
 			apply_central_impulse(-relative_velocity*rebote)
 		else: 
 			apply_central_impulse(linear_velocity*rebote)
 
-
 #### Death
-signal took_damage
+signal player_died
+signal somewhat_out_of_bounds
+signal out_of_bounds
 
-var lower_bounds  = Vector2(0,0)
-var upper_bounds  = Vector2(1920,1080)
+var lower_bounds    = Vector2(0,0)
+var upper_bounds    = Vector2(1920,1080)
+var s_lower_bounds  = Vector2(100,100)
+var s_upper_bounds  = Vector2(1820,980)
 
+var death_time = 0.2
+var already_death = false
 func die():
-	print("player" + str(player_index) + " is ded ")
+	if already_death:
+		return
+	already_death = true
+	emit_signal("player_died",player_index)
+	_sound_emiter(sound.player_death,0)
+	$DeathTimer.wait_time = death_time
+	$DeathTimer.start()
+
+func _really_die():
+	get_parent().remove_child(self)
 
 func _is_out_of_bounds():
-	return !\
+	return !(\
 	(position.x>=lower_bounds.x) and (position.x<=upper_bounds.x) and\
-	(position.y>=lower_bounds.y) and (position.y<=upper_bounds.y)
+	(position.y>=lower_bounds.y) and (position.y<=upper_bounds.y))
+
+func _is_somewhat_out_of_bounds():
+	return !(\
+	(position.x>=s_lower_bounds.x) and (position.x<=s_upper_bounds.x) and\
+	(position.y>=s_lower_bounds.y) and (position.y<=s_upper_bounds.y))
 
 ## Sound
 signal sfx_request
 
 export (float,0,100,5) var minimum_volume = 90
-enum sound {collision}
+enum sound {collision,player_death,chip_damage}
 func _sound_emiter(type,strength):
 	# strength tiene distintos valores dependiendo del origen
 	# por simplicidad, strength vale de 0 a 100
+	var type_string = ""
 	var output = minimum_volume+strength*3/10
 	match type:
 		sound.collision:
-			emit_signal("sfx_request",\
-			"player_collision",\
-			output)
+			type_string = "player_collision"
+		sound.player_death:
+			type_string = "player_death"
+		sound.chip_damage:
+			output = strength
+			type_string = "chip_damage"
+	emit_signal("sfx_request",type_string,output)
+
+
+## Scoring
+
+signal score_growth #índice de jugador, cantidad
+var _score_timer = 0
+export (float,0,100) var time_to_score      = 1
+export (int,0, 100)  var score_per_interval = 1
+
+func _score_counter(delta):
+	if _health==0:
+		return
+	_score_timer+=delta
+	
+	if _score_timer>time_to_score:
+		emit_signal("score_growth",player_index,score_per_interval)
+		_score_timer = 0

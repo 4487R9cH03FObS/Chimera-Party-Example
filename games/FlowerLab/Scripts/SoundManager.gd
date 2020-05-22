@@ -8,9 +8,18 @@ func _on_sfx_request(name,volume):
 	volume = _transform_to_db(volume)
 	match name:
 		"player_collision":
-			print("choque jugador")
+			#print("choque jugador")
 			$SFX/playerCollision.volume_db = volume
 			$SFX/playerCollision.play()
+		"player_death":
+			$SFX/playerDeath.volume_db = volume
+			$SFX/playerDeath.play()
+			$SFX/playerDeath.volume_db = volume
+			$SFX/playerDeath.play()
+		"chip_damage":
+			$SFX/chipDamage.volume_db = volume
+			$SFX/chipDamage.play()
+			pass
 
 func _transform_to_db(volume):
 	return -clamp(100-volume,0,100)

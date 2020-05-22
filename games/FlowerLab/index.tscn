@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://games/FlowerLab/index.gd" type="Script" id=1]
 [ext_resource path="res://games/FlowerLab/Sprites/Dark15.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://games/FlowerLab/Audio/bass background.wav" type="AudioStream" id=6]
 [ext_resource path="res://games/FlowerLab/Scripts/SoundManager.gd" type="Script" id=7]
 [ext_resource path="res://games/FlowerLab/Audio/collision sound.wav" type="AudioStream" id=8]
+[ext_resource path="res://games/FlowerLab/Audio/hit1.wav" type="AudioStream" id=9]
+[ext_resource path="res://games/FlowerLab/Audio/Explosion1.wav" type="AudioStream" id=10]
+[ext_resource path="res://games/FlowerLab/Audio/chip_damage.wav" type="AudioStream" id=11]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -62,6 +65,8 @@ __meta__ = {
 }
 
 [node name="GUI" type="Control" parent="."]
+margin_left = 3.60498
+margin_right = 3.60498
 __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
@@ -169,9 +174,18 @@ script = ExtResource( 7 )
 [node name="playerCollision" type="AudioStreamPlayer" parent="SoundManager/SFX"]
 stream = ExtResource( 8 )
 
+[node name="playerDeath" type="AudioStreamPlayer" parent="SoundManager/SFX"]
+stream = ExtResource( 10 )
+
+[node name="playerDeath2" type="AudioStreamPlayer" parent="SoundManager/SFX"]
+stream = ExtResource( 9 )
+
+[node name="chipDamage" type="AudioStreamPlayer" parent="SoundManager/SFX"]
+stream = ExtResource( 11 )
+
 [node name="Environment" type="Node" parent="SoundManager"]
 
-[node name="VacuumStart" type="AudioStreamPlayer2D" parent="SoundManager/Environment"]
+[node name="VacuumStart" type="AudioStreamPlayer" parent="SoundManager/Environment"]
 stream = ExtResource( 6 )
 
 [node name="Spawn" type="Node2D" parent="."]
@@ -186,6 +200,11 @@ script = ExtResource( 5 )
 
 [node name="customTimer" type="Timer" parent="EventManager"]
 one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 1021.19, 606.331 )
+current = true
+zoom = Vector2( 2, 2 )
 [connection signal="finished" from="SoundManager/Environment/VacuumStart" to="SoundManager" method="_auto_play_environment"]
 [connection signal="timeout" from="Spawn/Timer" to="Spawn" method="_on_Timer_timeout"]
 [connection signal="array_placed_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_array_placed_asteroids"]

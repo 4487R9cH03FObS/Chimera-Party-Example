@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Explosion1.wav-8c683eb0cd0680035ae221e0d76081a9.sample"
+
+[deps]
+
+source_file="res://games/FlowerLab/Audio/Explosion1.wav"
+dest_files=[ "res://.import/Explosion1.wav-8c683eb0cd0680035ae221e0d76081a9.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
