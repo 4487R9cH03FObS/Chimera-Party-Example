@@ -10,6 +10,7 @@
 	* Implementadas las físicas de los juegadores
 	* ejercer impulso en choque
 	* Death
+	* Fix bug: asimetría en impulse,damage dealing
 
 * Sonido
 	* SoundManager.
@@ -17,9 +18,12 @@
 * Sistema de Puntajes
 	* se asocia puntaje a la muerte de jugadores
 
+* Sprites
+	* Asteroides
+
 ## To Do
 
-* Dreadnaught:
+* Dreadnought:
 	* Ataques
 	* Coreografía
 
@@ -30,11 +34,9 @@
 
 * Sprites
 	* Jugadores
-	* Asteroides
 	* Dreadnaught
 
 * Player:
-	* Fix bug: asimetría en impulse,damage dealing
 
 * Ataques:
 	* Laser:
@@ -43,7 +45,11 @@
 		rigid body 2d con autofree
 	* WideBeam Dreadnaught:
 		"" raycast desde player a dreadnaught.
-
+		
 * Sistema de Puntajes
 	* puntajes a GUI
 	* puntajes al finalizar
+
+* GUI:
+	* mostrar puntajes
+	* comportamientos de puntajes dependiendo del estado de los jugadores
