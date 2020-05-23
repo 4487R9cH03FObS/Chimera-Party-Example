@@ -2,12 +2,20 @@
  
 ## Avances
 
-* nodo que maneja eventos del juego mediante señales
+* EventManager
 * Orquestra de spawning
 
 * Player
 	* Desgaste de HP a través de colisiones
 	* Implementadas las físicas de los juegadores
+	* ejercer impulso en choque
+	* Death
+
+* Sonido
+	* SoundManager.
+
+* Sistema de Puntajes
+	* se asocia puntaje a la muerte de jugadores
 
 ## To Do
 
@@ -16,7 +24,6 @@
 	* Coreografía
 
 * Sonidos
-	* añadir funcionalidad al manager.
 	* SFX
 	* Música
 	* Entorno
@@ -27,8 +34,7 @@
 	* Dreadnaught
 
 * Player:
-	* Death
-	* ejercer impulso en choque
+	* Fix bug: asimetría en impulse,damage dealing
 
 * Ataques:
 	* Laser:
@@ -39,5 +45,5 @@
 		"" raycast desde player a dreadnaught.
 
 * Sistema de Puntajes
-
-## Discusiones del Futuro
+	* puntajes a GUI
+	* puntajes al finalizar

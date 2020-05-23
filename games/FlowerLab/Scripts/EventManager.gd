@@ -42,29 +42,29 @@ func _event_launcher():
 	
 	match event_no:
 		0:
-			print("ready??")
-			time = 5
+			print("ready?")
+			time = 2
 		1:
-			emit_signal("array_placed_asteroids",[-700,-300,300,700],1)
-			time = 5
+			emit_signal("array_placed_asteroids",[-700,-300,300,700],0.3)
+			time = 15
 		2:
-			emit_signal("simetric_random_asteroids")
-			time = 20
+			emit_signal("simetric_random_asteroids",0.8)
+			time = 5
 		3:
-			emit_signal("normal_random_asteroids")
-			time = 10
+			emit_signal("normal_random_asteroids",0.5)
+			time = 5
 		4:
-			emit_signal("array_placed_asteroids",[-100,-200,200,100],1)
-			time = 10
+			emit_signal("array_placed_asteroids",[-700,-300,300,700],1)
+			time = 15
 		5:
-			emit_signal("simetric_random_asteroids")
-			time = 20
+			emit_signal("simetric_random_asteroids",0.4)
+			time = 15
 		6:
-			emit_signal("normal_random_asteroids")
-			time = 10
+			emit_signal("normal_random_asteroids",0.3)
+			time = 15
 		7:
-			emit_signal("simetric_random_asteroids")
-			time = 10
+			emit_signal("simetric_random_asteroids",0.3)
+			time = 20
 		_:
 			_end_times()
 	
@@ -76,8 +76,12 @@ func _end_times():
 	
 signal simetric_random_asteroids
 signal normal_random_asteroids
+# warning-ignore:unused_signal
 signal place_asteroids
+# warning-ignore:unused_signal
 signal simetric_placed_asteroids
 signal array_placed_asteroids
+# warning-ignore:unused_signal
 signal halt_asteroids
+# warning-ignore:unused_signal
 signal restart_asteroids

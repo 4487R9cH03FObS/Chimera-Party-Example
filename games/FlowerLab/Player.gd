@@ -17,12 +17,19 @@ var action_b   = ""
 ## Initial settings
 
 onready var main = get_parent().get_parent()
-onready var soundManager=get_parent().get_parent().get_node("SoundManager")
+onready var soundManager= main.get_node("SoundManager")
+onready var GUI = main.get_node("GUI")
 
 func _ready():
+# warning-ignore:return_value_discarded
 	self.connect("sfx_request",soundManager,"_on_sfx_request")
-	self.connect("score_growth",get_parent().get_parent(),"_on_player_score_growth")
-	self.connect("player_died",get_parent().get_parent(),"_on_player_death")
+# warning-ignore:return_value_discarded
+	self.connect("score_growth",main,"_on_player_score_growth")
+# warning-ignore:return_value_discarded
+	self.connect("player_died",main,"_on_player_death")
+# warning-ignore:return_value_discarded
+	self.connect("somewhat_out_of_bounds",GUI,"_on_pulse")
+	
 	$TextureProgress.max_value = _max_health
 	linear_damp = damp
 	var bound_node = main.get_node(\
@@ -33,7 +40,8 @@ func _ready():
 	bound_node.margin_right,\
 	bound_node.margin_bottom-bound_node.margin_top)
 
-
+# warning-ignore:shadowed_variable
+# warning-ignore:shadowed_variable
 func init(player_index, player_color):
 	self.player_index = player_index
 	self.player_color = player_color
@@ -64,7 +72,7 @@ func _physics_process(delta):
 	
 	if _is_somewhat_out_of_bounds():
 		emit_signal("somewhat_out_of_bounds")
-		_take_damage(10*delta)
+		_take_damage(20*delta)
 	
 	if _is_out_of_bounds():
 		emit_signal("out_of_bounds")
@@ -131,30 +139,45 @@ export (float,0,100,5)   var chip_damage_collision = 10
 export (float,0,100,0.1) var bound_on_external_damage = 70
 signal took_damage
 var damage_potential = 10
-var rebote  = 10
 
 func _take_damage(value):
 	_set_health(_health-value)
 	emit_signal("took_damage",value)
 	_sound_emiter(sound.chip_damage,70)
 
+var rebote  = 1000
+
 func _on_Player_body_entered(body):
 	
 	#print(body.get_class())
 	#various cases
 	if body.get_class() == "RigidBody2D" and "damage_potential" in body:
-		var relative_velocity = self.linear_velocity - body.linear_velocity
+		var relative_direction = self.linear_velocity - body.linear_velocity
 		var damage =\
-		chip_damage_collision +\
-		body.damage_potential* relative_velocity.length()
+		chip_damage_collision + 15
 		damage = clamp(damage,0,bound_on_external_damage)
 		_sound_emiter(sound.collision,damage)
 		_take_damage(damage)
-		#print(self.get_name() + "suffered: " + str(damage))
-		if "player_color" in body:
-			apply_central_impulse(-relative_velocity*rebote)
-		else: 
-			apply_central_impulse(linear_velocity*rebote)
+		relative_direction = relative_direction.normalized()
+		if !("player_index" in body):
+			apply_central_impulse(relative_direction*2*rebote)
+		else:
+			apply_central_impulse(-relative_direction*rebote)
+		
+		
+#	if body.get_class() == "RigidBody2D" and "damage_potential" in body:
+#		var relative_velocity = self.linear_velocity - body.linear_velocity
+#		var damage =\
+#		chip_damage_collision +\
+#		body.damage_potential* relative_velocity.length()
+#		damage = clamp(damage,0,bound_on_external_damage)
+#		_sound_emiter(sound.collision,damage)
+#		_take_damage(damage)
+#		#print(self.get_name() + "suffered: " + str(damage))
+#		if "player_color" in body:
+#			apply_central_impulse(-relative_velocity*rebote)
+#		else: 
+#			apply_central_impulse(linear_velocity*rebote)
 
 #### Death
 signal player_died
@@ -210,13 +233,12 @@ func _sound_emiter(type,strength):
 			type_string = "chip_damage"
 	emit_signal("sfx_request",type_string,output)
 
-
 ## Scoring
 
 signal score_growth #índice de jugador, cantidad
 var _score_timer = 0
 export (float,0,100) var time_to_score      = 1
-export (int,0, 100)  var score_per_interval = 1
+export (int,  0,100) var score_per_interval = 1
 
 func _score_counter(delta):
 	if _health==0:

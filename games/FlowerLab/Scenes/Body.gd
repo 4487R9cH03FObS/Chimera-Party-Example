@@ -3,13 +3,12 @@ extends RigidBody2D
 const max_distance = 2000
 
 
-func _process(delta):
+func _process(_delta):
 	if position.length()>max_distance:
 		_really_die()
 
 func _die():
-	print(get_name() + "is ded")
-	emit_signal("killed")
+	emit_signal("has_died")
 	$real_death_timer.wait_time = 0.01
 	$real_death_timer.start()
 
@@ -20,7 +19,7 @@ func _really_die():
 export (float) var _max_health    = 100
 onready var _health = _max_health
 signal health_updated(health)
-signal killed
+signal has_died
 signal took_damage
 
 ## inside Damages
@@ -45,16 +44,21 @@ func _set_health(value):
 
 func _on_Body_body_entered(body):
 	
-	#various cases
+	# against rigidbody
 	if body.get_class() == "RigidBody2D" and "damage_potential" in body:
-		var relative_velocity = self.linear_velocity - body.linear_velocity
-		var damage =\
-		chip_damage_collision +\
-		body.damage_potential* relative_velocity.length()
-		damage = clamp(damage,0,bound_on_external_damage)
-		_take_damage(damage)
-		if "rebote" in body:
-			apply_central_impulse(-relative_velocity*(rebote+body.rebote))
-		else:
-			apply_central_impulse(-relative_velocity*rebote)
+		_take_damage(25)
+	
+	
+	#various cases
+#	if body.get_class() == "RigidBody2D" and "damage_potential" in body:
+#		var relative_velocity = self.linear_velocity - body.linear_velocity
+#		var damage =\
+#		chip_damage_collision +\
+#		body.damage_potential* relative_velocity.length()
+#		damage = clamp(damage,0,bound_on_external_damage)
+#		_take_damage(damage)
+#		if "rebote" in body:
+#			apply_central_impulse(-relative_velocity*(rebote+body.rebote))
+#		else:
+#			apply_central_impulse(-relative_velocity*rebote)
 

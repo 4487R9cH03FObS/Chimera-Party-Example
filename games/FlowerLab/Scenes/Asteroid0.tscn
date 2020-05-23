@@ -13,6 +13,7 @@ polygon = PoolVector2Array( -3.88437, 5.92585, -2.25459, 5.87252, -2.3697, 7.282
 mass = 1000.0
 contacts_reported = 3
 contact_monitor = true
+angular_damp = 0.1
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2( 5, 5 )

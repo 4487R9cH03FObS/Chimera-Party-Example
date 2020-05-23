@@ -15,7 +15,7 @@ polygon = PoolVector2Array( -27.3776, 22.5555, -0.235012, -31.4661, 29.2792, 22.
 
 [node name="Player" type="RigidBody2D"]
 mode = 2
-contacts_reported = 3
+contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 2 )
 

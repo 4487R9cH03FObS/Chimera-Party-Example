@@ -8,11 +8,12 @@ var players
 onready var gameplay_screen = get_node("GUI/MarginContainer/HBoxContainer/VBoxContainer3/gameplay")
 
 func _ready():
+	
 	Party.load_test()
 	players = Party.get_players()
-	print(players)
 	for i in range(players.size()):
 		if players[i].color != -1:
+			_alive_players.append(i)
 			var player_inst = Player.instance()
 			$Players.add_child(player_inst)
 			player_inst.init(i, players[i].color)
@@ -21,6 +22,7 @@ func _ready():
 		Players.get_child(i).global_position = \
 			$Positions.get_child(i).global_position
 	
+# warning-ignore:return_value_discarded
 	$Timer.connect("timeout", self, "on_timeout")
 	
 
@@ -28,33 +30,41 @@ func on_timeout():
 	$CanvasLayer/Label.visible = true
 	Party.end_game([100, 0, 50, 0])
 	
-func _physics_process(delta):
-	var players = Players.get_children()
-	players.sort_custom(self, "sort_by_y")
-	for i in range(players.size()):
-		players[i].z_index = i
-
-func sort_by_y(a, b):
-	return a.position.y < b.position.y
+func _physics_process(_delta):
 	
+	pass
+	# warning-ignore:shadowed_variable
+#	var players = Players.get_children()
+#	players.sort_custom(self, "sort_by_y")
+#	for i in range(players.size()):
+#		players[i].z_index = i
+#
+#func sort_by_y(a, b):
+#	return a.position.y < b.position.y
+#
 
 ## Scoring
 
 var _alive_players = []
 var _gameplay_scores = {-1:0,0:0,1:0,2:0,3:0}
 signal score_changed
+signal all_players_died
 
 func _set_score(i,score):
 	_gameplay_scores[i] = max(score,0)
-	emit_signal("score_changed",score)
-	print("player " + str(i) + " has " + str(_gameplay_scores[i]) + "score")
+	emit_signal("score_changed",i,score)
+	#print("player " + str(i) + " has " + str(_gameplay_scores[i]) + "score")
 
 func _sum_score(i,score):
 	_set_score(i,score+_gameplay_scores[i])
 
 func _on_player_death(i):
+	if _alive_players.size()==1:
+		emit_signal("all_players_died",_alive_players[0])
+		return
+	
 	var target = _alive_players.find(i)
-	if target==1:
+	if target==-1:
 		push_warning("tried to remove a non alive player")
 		return
 	_sum_score(i,-5)
@@ -70,6 +80,11 @@ func _on_player_death(i):
 
 func _on_player_score_growth(i,score):
 	_sum_score(i,score)
+
+func _show_scores():
+	## escribe a la gameplay screen
+	
+	pass
 
 ## API
 #

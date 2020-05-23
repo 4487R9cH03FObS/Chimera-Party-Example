@@ -1,6 +1,6 @@
 extends Node
 
-onready var sfx   = $SFx
+onready var sfx   = $SFX
 onready var music = $Music 
 onready var env   = $Environment
 
