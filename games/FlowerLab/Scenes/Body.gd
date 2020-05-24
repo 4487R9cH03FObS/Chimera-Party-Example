@@ -2,7 +2,6 @@ extends RigidBody2D
 
 const max_distance = 2000
 
-
 func _process(_delta):
 	if position.length()>max_distance:
 		_really_die()
@@ -13,7 +12,13 @@ func _die():
 	$real_death_timer.start()
 
 func _really_die():
-	get_parent().remove_child(self)
+	queue_free()
+#	get_parent().remove_child(self)
+
+func set_value(brightness):
+	var color = Color.black
+	color.v = brightness
+	$Sprite.modulate = color
 
 ## Health
 export (float) var _max_health    = 100

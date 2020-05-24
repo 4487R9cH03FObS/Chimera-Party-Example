@@ -12,7 +12,11 @@ get_node("MarginContainer/HBoxContainer/VBoxContainer3/supCent"),\
 
 get_node("MarginContainer/HBoxContainer/VBoxContainer2/supDer"),\
 get_node("MarginContainer/HBoxContainer/VBoxContainer/infIzq"),\
-get_node("MarginContainer/HBoxContainer/VBoxContainer2/infDer")]
+get_node("MarginContainer/HBoxContainer/VBoxContainer2/infDer"),\
+get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/FirstPlayer"),\
+get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/SecondPlayer"),\
+get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/ThirdPlayer"),\
+get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/FourthPlayer")]
 #get_node("MarginContainer/HBoxContainer/VBoxContainer3/infCent"),\
 
 onready var timer = $pulse_timer

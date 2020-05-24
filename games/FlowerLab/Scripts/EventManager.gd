@@ -35,9 +35,12 @@ func external_event_changer(number):
 	$customTimer.stop()
 	_its_timeout()
 
+func _end_times():
+	events_ended = 1
+	print("events_ended")
+
 func _event_launcher():
 	var time = null
-	
 	print("evento: "+str(event_no))
 	
 	match event_no:
@@ -45,6 +48,8 @@ func _event_launcher():
 			print("ready?")
 			time = 2
 		1:
+			if test_events:
+				return _test_events()
 			emit_signal("array_placed_asteroids",[-700,-300,300,700],0.3)
 			time = 15
 		2:
@@ -67,21 +72,43 @@ func _event_launcher():
 			time = 20
 		_:
 			_end_times()
-	
 	return time
 
-func _end_times():
-	events_ended = 1
-	print("events_ended")
-	
-signal simetric_random_asteroids
-signal normal_random_asteroids
-# warning-ignore:unused_signal
-signal place_asteroids
-# warning-ignore:unused_signal
-signal simetric_placed_asteroids
-signal array_placed_asteroids
-# warning-ignore:unused_signal
-signal halt_asteroids
-# warning-ignore:unused_signal
+var center = Vector2(1920/2,1080/2)
+var top_center    = Vector2(1920/2,1080/2)
+
+var test_events = 1
+func _test_events():
+	emit_signal("spawn_dreadnought",top_center)
+	emit_signal("set_asteroid_speed",100)
+	emit_signal("set_dreadnought_light_energy",1)
+	emit_signal("start_dreadnought_lasers")
+	#emit_signal("set_laser_pattern","type2",1,0.05,200) # type, pattern_time,laser_tme,speed
+	emit_signal("set_dreadnought_scale",5)
+	emit_signal("array_placed_asteroids",[-700,-300,300,700],1)
+	_end_times()
+	pass
+
+signal set_asteroid_speed #speed
+signal place_asteroids # position time
+signal simetric_random_asteroids # time
+signal simetric_placed_asteroids # time
+signal normal_random_asteroids # time
+signal array_placed_asteroids # array[position] time
+signal halt_asteroids 
 signal restart_asteroids
+
+signal set_dreadnought_light_energy # float
+signal set_dreadnought_scale # float 
+signal spawn_dreadnought # position
+signal delete_dreadnought
+signal move_dreadnought_to # position
+signal start_dreadnought_lasers
+signal stop_dreadnought_lasers
+signal set_laser_pattern # type, pattern_time,laser_tme,speed
+signal set_laser_pattern_time #time
+signal set_laser_time #time
+signal set_laser_speed #speed
+
+# laser types:
+# nearest,everyone,farthest,type1,type2,type3,type4

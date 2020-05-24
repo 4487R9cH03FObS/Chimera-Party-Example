@@ -114,18 +114,22 @@ func spawn_randomized():
 func spawn_in(place):
 	var new_asteroid = _new_instance()
 #	self.add_child(new_asteroid)
-	
 	new_asteroid.position =\
 	Vector2(spawnCenter.x+place,-spawnheight)
 	new_asteroid.linear_velocity = get_spawn_velocity()
 	new_asteroid.angular_velocity = get_spawn_angular_velocity()
+	var brightness = rng.randf_range(0.8,1)
+	new_asteroid.set_value(brightness)
 
 func get_spawn_point():
 	 return Vector2(\
 	spawnCenter.x + rng.randf_range(-1,1)*spawnwidth,\
 	-spawnheight)
 
-export (float, 0 , 2000,100) var downward_asteroid_speed = 300
+var downward_asteroid_speed = 300
+
+func set_asteroid_speed(speed):
+	downward_asteroid_speed = speed
 
 func get_spawn_velocity():
 	return Vector2(0, downward_asteroid_speed)
@@ -195,3 +199,6 @@ func _on_EventManager_halt_asteroids():
 
 func _on_EventManager_restart_asteroids():
 	_start()
+
+func _on_EventManager_set_asteroid_speed(speed):
+	set_asteroid_speed(speed)

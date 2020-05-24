@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://games/FlowerLab/index.gd" type="Script" id=1]
 [ext_resource path="res://games/FlowerLab/Sprites/Dark15.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://games/FlowerLab/Audio/Explosion1.wav" type="AudioStream" id=10]
 [ext_resource path="res://games/FlowerLab/Audio/chip_damage.wav" type="AudioStream" id=11]
 [ext_resource path="res://games/FlowerLab/GUI.gd" type="Script" id=12]
+[ext_resource path="res://games/FlowerLab/DreadNoughtSpawn.gd" type="Script" id=13]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -42,8 +43,8 @@ position = Vector2( 1536, 800 )
 [node name="SpawnCenter" type="Position2D" parent="Positions"]
 position = Vector2( 960, 0 )
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 100.0
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 300.0
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -106,6 +107,9 @@ one_shot = true
 position = Vector2( 1021.19, 606.331 )
 zoom = Vector2( 2, 2 )
 
+[node name="DreadNoughtSpawn" type="Node2D" parent="."]
+script = ExtResource( 13 )
+
 [node name="GUI" type="Control" parent="."]
 margin_left = 2.08752
 margin_right = 2.08752
@@ -138,13 +142,6 @@ margin_right = 173.0
 margin_bottom = 357.0
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
-
-[node name="ColorRect" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer/supIzq"]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="centIzq" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 361.0
@@ -275,14 +272,27 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="pulse_timer" type="Timer" parent="GUI"]
 one_shot = true
+[connection signal="timeout" from="EndTimer" to="." method="_on_timeout"]
 [connection signal="finished" from="SoundManager/Environment/VacuumStart" to="SoundManager" method="_auto_play_environment"]
 [connection signal="timeout" from="Spawn/Timer" to="Spawn" method="_on_Timer_timeout"]
 [connection signal="array_placed_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_array_placed_asteroids"]
+[connection signal="delete_dreadnought" from="EventManager" to="DreadNoughtSpawn" method="_on_delete"]
 [connection signal="halt_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_halt_asteroids"]
+[connection signal="move_dreadnought_to" from="EventManager" to="DreadNoughtSpawn" method="_on_move_to"]
 [connection signal="normal_random_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_normal_random_asteroids"]
 [connection signal="place_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_place_asteroids"]
 [connection signal="restart_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_restart_asteroids"]
+[connection signal="set_asteroid_speed" from="EventManager" to="Spawn" method="_on_EventManager_set_asteroid_speed"]
+[connection signal="set_dreadnought_light_energy" from="EventManager" to="DreadNoughtSpawn" method="_on_set_light_energy"]
+[connection signal="set_dreadnought_scale" from="EventManager" to="DreadNoughtSpawn" method="_on_set_scale"]
+[connection signal="set_laser_pattern" from="EventManager" to="DreadNoughtSpawn" method="_on_set_pattern"]
+[connection signal="set_laser_pattern_time" from="EventManager" to="DreadNoughtSpawn" method="_on_set_laser_pattern_time"]
+[connection signal="set_laser_speed" from="EventManager" to="DreadNoughtSpawn" method="_on_set_laser_speed"]
+[connection signal="set_laser_time" from="EventManager" to="DreadNoughtSpawn" method="_on_set_laser_time"]
 [connection signal="simetric_placed_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_simetric_placed_asteroids"]
 [connection signal="simetric_random_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_simetric_random_asteroids"]
+[connection signal="spawn_dreadnought" from="EventManager" to="DreadNoughtSpawn" method="_on_spawn_dreadnought"]
+[connection signal="start_dreadnought_lasers" from="EventManager" to="DreadNoughtSpawn" method="_on_start_lasers"]
+[connection signal="stop_dreadnought_lasers" from="EventManager" to="DreadNoughtSpawn" method="_on_stop_lasers"]
 [connection signal="timeout" from="EventManager/customTimer" to="EventManager" method="_its_timeout"]
 [connection signal="timeout" from="GUI/pulse_timer" to="GUI" method="_on_end_pulse"]

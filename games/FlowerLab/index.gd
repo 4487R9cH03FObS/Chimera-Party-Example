@@ -23,12 +23,26 @@ func _ready():
 			$Positions.get_child(i).global_position
 	
 # warning-ignore:return_value_discarded
-	$Timer.connect("timeout", self, "on_timeout")
-	
+	$EndTimer.connect("timeout", self, "on_timeout")
+	$EndTimer.start()
 
-func on_timeout():
+
+func _on_players_death():
+	$EndTimer.stop()
+	#wait a bit and then call _on_game_finish()
+	pass
+
+func _on_game_finish():
+	$EndTimer.stop()
 	$CanvasLayer/Label.visible = true
-	Party.end_game([100, 0, 50, 0])
+	
+	var end_scores = [0, 0, 0, 0]
+	for i in end_scores.size():
+		end_scores[i]=_gameplay_scores[i]
+	Party.end_game([end_scores])
+#	Party.end_game([100, 0, 50, 0])
+	pass # Replace with function body.
+
 	
 func _physics_process(_delta):
 	

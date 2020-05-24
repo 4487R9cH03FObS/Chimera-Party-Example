@@ -152,7 +152,7 @@ func _on_Player_body_entered(body):
 	#print(body.get_class())
 	#various cases
 	if body.get_class() == "RigidBody2D" and "damage_potential" in body:
-		var relative_direction = self.linear_velocity - body.linear_velocity
+		var relative_direction = body.linear_velocity - self.linear_velocity
 		var damage =\
 		chip_damage_collision + 15
 		damage = clamp(damage,0,bound_on_external_damage)
@@ -160,9 +160,9 @@ func _on_Player_body_entered(body):
 		_take_damage(damage)
 		relative_direction = relative_direction.normalized()
 		if !("player_index" in body):
-			apply_central_impulse(relative_direction*2*rebote)
+			apply_central_impulse(-relative_direction*2*rebote)
 		else:
-			apply_central_impulse(-relative_direction*rebote)
+			apply_central_impulse(relative_direction*rebote)
 		
 		
 #	if body.get_class() == "RigidBody2D" and "damage_potential" in body:
