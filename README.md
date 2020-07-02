@@ -1,4 +1,7 @@
-# minijuego de Chimera Party
+# Minijuego de Chimera Party
+
+Juego de naves, hay que esquivar y arrinconar a los otros jugadores para sobrevivir el mayor tiempo posible.
+Sin nombre aun jeje. 
  
 ## Avances
 
