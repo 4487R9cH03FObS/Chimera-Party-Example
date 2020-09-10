@@ -1,10 +1,30 @@
 Credits
 -------
 
+Assets by others
+-------
 Invasion2000 Font
 
 Jakob Fischer
 jakob@pizzadude.dk
 www.pizzadude.dk
 -------
-End of Credits
+Music: 
+main: Hensel Schwanenlied-8bit
+unused: Dash Runner
+
+both available from:
+https://www.dl-sounds.com/royalty-free/
+-------
+
+Credits for everything else,
+------
+
+Francisco Aliaga
+alias mdl74fsre1hz
+faliaga@dim.uchile.cl
+
+VGDEV, Universidad de Chile.
+------
+
+Software used: Godot, Gimp, Audacity, Bfxr and Github.
