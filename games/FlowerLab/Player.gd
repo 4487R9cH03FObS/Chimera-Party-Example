@@ -31,6 +31,7 @@ func _ready():
 	self.connect("somewhat_out_of_bounds",GUI,"_on_pulse")
 	
 	$TextureProgress.max_value = _max_health
+	health_bar.value=_max_health
 	linear_damp = damp
 	var bound_node = main.get_node(\
 	"GUI/MarginContainer/HBoxContainer/VBoxContainer3/gameplay")
@@ -39,6 +40,7 @@ func _ready():
 	s_upper_bounds = upleft + Vector2(\
 	bound_node.margin_right,\
 	bound_node.margin_bottom-bound_node.margin_top)
+
 
 # warning-ignore:shadowed_variable
 # warning-ignore:shadowed_variable
@@ -115,7 +117,7 @@ func get_target_acceleration():
 
 ### Health Damage and death management
 
-export (float) var _max_health    = 100
+export (float) var _max_health    = 300
 onready var _health = _max_health
 signal health_updated # float
 

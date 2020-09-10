@@ -13,10 +13,10 @@ get_node("MarginContainer/HBoxContainer/VBoxContainer3/supCent"),\
 get_node("MarginContainer/HBoxContainer/VBoxContainer2/supDer"),\
 get_node("MarginContainer/HBoxContainer/VBoxContainer/infIzq"),\
 get_node("MarginContainer/HBoxContainer/VBoxContainer2/infDer"),\
-get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/FirstPlayer"),\
-get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/SecondPlayer"),\
-get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/ThirdPlayer"),\
-get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/FourthPlayer")]
+get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P1"),\
+get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P2"),\
+get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P3"),\
+get_node("MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P4")]
 #get_node("MarginContainer/HBoxContainer/VBoxContainer3/infCent"),\
 
 onready var timer = $pulse_timer
@@ -49,10 +49,60 @@ func _on_end_pulse():
 	_pulse_everyone()
 	pulsating = false
 
+onready var player_score_nodes = ([
+$MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P1/ColorRect,\
+$MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P2/ColorRect,\
+$MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P3/ColorRect,\
+$MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P4/ColorRect])
+
 func _on_player_death(i):
+	#var col = player_score_nodes[i].modulate
+	player_score_nodes[i].modulate = Color.red #  col.lerp(col,Color.red,0)
 	
 	pass
+
+onready var message_label=$MarginContainer/HBoxContainer/VBoxContainer3/gameplay/scoreLabel
+
+
+signal freeze_timer
+func on_ending(player,winner):
+	emit_signal("freeze_timer")
+	var message = "\n\n\n"
+	message+=player
+	message+="\n"
+	message+="[rainbow]"+ winner +" !!![/rainbow] [wave amp=50 freq=2] WINNER [/wave]"
+	message_label.set_bbcode(message)
+	message_label.visible = true
+
+func _on_display_message(message):
+	message_label.bbcode_text=message
+	message_label.visible=true
+	pass
+
+func _on_hide_message():
+	message_label.visible=false
 
 func _pulse_everyone():
 	for node in pulsating_nodes:
 		node.color = target_color
+
+onready var score_nodes =[\
+$MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P1/ColorRect/RichTextLabel,\
+$MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P2/ColorRect/RichTextLabel,\
+$MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P3/ColorRect/RichTextLabel,\
+$MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer/P4/ColorRect/RichTextLabel]
+
+func _change_score(index,score):
+	var node = null
+	match index:
+		0:
+			node = score_nodes[0]
+		1:
+			node = score_nodes[1]
+		2:
+			node = score_nodes[2]
+		3:
+			node = score_nodes[3]
+	if node==null:
+		return
+	node.text = "P"+str(index+1)+":  "+str(score)

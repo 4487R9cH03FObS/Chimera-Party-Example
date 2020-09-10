@@ -43,6 +43,7 @@ var rng = RandomNumberGenerator.new()
 
 func _ready():
 	spawnCenter.x = get_node("../Positions/SpawnCenter").position.x
+	rng.randomize()
 
 enum spawn_mode\
 {randomized,\

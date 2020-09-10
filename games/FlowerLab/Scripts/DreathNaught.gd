@@ -11,6 +11,7 @@ onready var pattern_timer = $PatternTimer
 onready var light = $Light2D
 
 func _ready():
+	rng.randomize()
 	pass
 
 func init():
@@ -24,14 +25,21 @@ var _target_light = 1
 func set_target_light_energy(amount):
 	_target_light = amount
 
-func _physics_process(_delta):
+var physics_active = false
+func activate_physics(value):
+	physics_active = value
+
+func _physics_process(delta):
+	if physics_active:
+		_do_physics(delta)
+	light.energy = lerp(light.energy,_target_light,0.05)
+
+func _do_physics(_delta):
 	# solve dposition/dt = alpha*(target_position-position) , alpha>0
 	_d_dtposition = alpha*(_target_position-position)
 	_d_dtposition = move_and_slide(_d_dtposition)
-	
-	light.energy = lerp(light.energy,_target_light,0.05)
 
-onready var _target_position = position
+var _target_position = position
 
 func set_target_position(target):
 	_target_position = target
@@ -85,7 +93,6 @@ func _get_farthest_player_direction():
 		if (position-pos).length()>(position-nearest).length():
 			nearest = pos
 	return nearest-position
-
 
 func _get_nearest_player_direction():
 	return _get_nearest_player_position()-position
@@ -209,10 +216,13 @@ func _stop_lasers():
 func _re_start_lasers():
 	_laser_sender()
 
+onready var pewSound = $pewSound
 func _send_laser():
 	var new_laser = laser.instance()
 	add_child(new_laser)
 	new_laser.init(_current_launch_direction,_laser_speed)
+	pewSound.play()
+	
 
 func _send_laser_pattern():
 	_launch_current_pattern()

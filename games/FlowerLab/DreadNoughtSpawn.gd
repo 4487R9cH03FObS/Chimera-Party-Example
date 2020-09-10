@@ -14,8 +14,7 @@ func _physics_process(_delta):
 		_current.scale = lerp(_current.scale,_target_scale,0.1)
 
 func _on_set_scale(scaleFactor):
-	if _current!=null:
-		_target_scale=Vector2(1,1)*scaleFactor
+	_target_scale=Vector2(1,1)*scaleFactor
 
 func _on_spawn_dreadnought(place):
 	if get_child_count()!=0:
@@ -67,3 +66,9 @@ func _on_set_pattern(type,pattern_time,laser_time,speed):
 func _on_set_light_energy(amount):
 	if _current!=null:
 		_current.set_target_light_energy(amount)
+
+func _on_EventManager_activate_dreadnought_physics(value):
+	if _current!=null:
+		_current.activate_physics(value)
+
+

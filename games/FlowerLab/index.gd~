@@ -22,6 +22,7 @@ func _ready():
 		Players.get_child(i).global_position = \
 			$Positions.get_child(i).global_position
 	
+# warning-ignore:return_value_discarded
 	$EndTimer.connect("timeout", self, "on_timeout")
 	$EndTimer.start()
 
@@ -33,7 +34,7 @@ func _on_players_death():
 
 func _on_game_finish():
 	$EndTimer.stop()
-	# show gamescores
+	$CanvasLayer/Label.visible = true
 	
 	var end_scores = [0, 0, 0, 0]
 	for i in end_scores.size():
@@ -64,26 +65,23 @@ signal score_changed
 signal all_players_died
 
 func _set_score(i,score):
-	var new_score =max(score,0) 
-	_gameplay_scores[i] = new_score
-	emit_signal("score_changed",i,new_score)
+	_gameplay_scores[i] = max(score,0)
+	emit_signal("score_changed",i,score)
 
 func _sum_score(i,score):
 	_set_score(i,score+_gameplay_scores[i])
 
-signal player_died(i)
 func _on_player_death(i):
 	if _alive_players.size()==1:
 		emit_signal("all_players_died",_alive_players[0])
 		_show_players_and_winner(_alive_players[0])
 		$Timer.wait_time=2
 		$Timer.start()
-	
+
 	var target = _alive_players.find(i)
 	if target==-1:
 		push_warning("tried to remove a non alive player")
 		return
-	emit_signal("player_died",i)
 	_sum_score(i,-5)
 	_alive_players.remove(target)
 	
@@ -105,20 +103,19 @@ func _end_game():
 	Party.end_game(final_scores)
 
 func _show_players_and_winner(winner):
-	var spaces = "                "
-	
 	var mensaje1 = ""
 	for player_index in range(0,4):
-		emit_signal("score_changed",player_index,_gameplay_scores[player_index])
 		if player_index!= winner:
-			mensaje1+= spaces +  "player " + str(player_index+1) +": " + str(_gameplay_scores[player_index]) + "\n"
-		#else:
-		#	mensaje1+= "player " + str(player_index+1) +": " + str(_gameplay_scores[player_index]) +"!!! <- Winner \n"
-	var winner_message= spaces + "player "+ str(winner+1) + ": " + str(_gameplay_scores[winner])
-	emit_signal("final_score",mensaje1,winner_message)
-
-signal final_score(players,winner)
-
+			mensaje1+= "player " + str(player_index+1) +": " + str(_gameplay_scores[player_index]) + "\n"
+		else:
+			mensaje1+= "player " + str(player_index+1) +": " + str(_gameplay_scores[player_index]) +"!!! \n"
+	var mensaje2 = "player "+ str(winner) +": "+ str(_gameplay_scores[winner]) +"!!   Winner"
+	$CanvasLayer/Label.text = mensaje1
+#	$CanvasLayer/Label/RichTextLabel.text = mensaje2
+	$CanvasLayer/Label.show()
+#	$CanvasLayer/Label/RichTextLabel.show()
+	
+	
 ## API
 #
 #  Los colores disponibles son verde, rojo, amarillo, azul
