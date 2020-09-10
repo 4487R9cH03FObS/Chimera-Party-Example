@@ -1,4 +1,7 @@
-# minijuego de Chimera Party
+# Minijuego de Chimera Party
+
+Juego de naves, hay que esquivar y arrinconar a los otros jugadores para sobrevivir el mayor tiempo posible.
+Sin nombre aun jeje. 
  
 ## Avances
 
@@ -7,7 +10,7 @@
 
 * Player
 	* Desgaste de HP a través de colisiones
-	* Implementadas las físicas de los juegadores
+	* Implementadas las físicas de los jugadores
 	* ejercer impulso en choque
 	* Death
 	* Fix bug: asimetría en impulse,damage dealing
@@ -15,37 +18,22 @@
 * Sonido
 	* SoundManager.
 
-* Sistema de Puntajes
-	* se asocia puntaje a la muerte de jugadores
-
 * Sprites
 	* Asteroides
-
-## To Do
-
-* Dreadnought:
-	* Ataques
-	* Coreografía
+	* Background
+	* Jugadores
+	* Dreadnaught
 
 * Sonidos
 	* SFX
 	* Música
 	* Entorno
 
-* Sprites
-	* Jugadores
-	* Dreadnaught
 
-* Player:
-
-* Ataques:
+* Ataques Dreadnought:
 	* Laser:
-		area2d con auto free al salir de la pantalla
-	* Bullet:
-		rigid body 2d con autofree
-	* WideBeam Dreadnaught:
-		"" raycast desde player a dreadnaught.
-		
+
+
 * Sistema de Puntajes
 	* puntajes a GUI
 	* puntajes al finalizar
@@ -53,3 +41,19 @@
 * GUI:
 	* mostrar puntajes
 	* comportamientos de puntajes dependiendo del estado de los jugadores
+
+## To Do
+
+* Dreadnought:
+	* Coreografía en EventManager
+
+* Calibrar puntajes
+
+------------------------ dejado atras
+
+* Ataques Dreadnought:   ?? quizás no.
+	* Bullet:
+		rigid body 2d con autofree
+	* WideBeam Dreadnaught:
+		"" raycast desde player a dreadnaught.
+		
