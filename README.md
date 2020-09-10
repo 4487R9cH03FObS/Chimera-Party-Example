@@ -1,11 +1,11 @@
-# Minijuego de Chimera Party
+# Minijuego de Chimera Party: SpaceShips
 
 Juego de naves, hay que esquivar y arrinconar a los otros jugadores para sobrevivir el mayor tiempo posible.
-Sin nombre aun jeje. 
  
 ## Avances
 
 * EventManager
+
 * Orquestra de spawning
 
 * Player
@@ -13,25 +13,22 @@ Sin nombre aun jeje.
 	* Implementadas las físicas de los jugadores
 	* ejercer impulso en choque
 	* Death
-	* Fix bug: asimetría en impulse,damage dealing
-
-* Sonido
-	* SoundManager.
-
+	
 * Sprites
 	* Asteroides
 	* Background
 	* Jugadores
 	* Dreadnaught
 
+
 * Sonidos
+	* SoundManager.
 	* SFX
 	* Música
 	* Entorno
 
-
 * Ataques Dreadnought:
-	* Laser:
+	* Lasers
 
 
 * Sistema de Puntajes
@@ -42,18 +39,5 @@ Sin nombre aun jeje.
 	* mostrar puntajes
 	* comportamientos de puntajes dependiendo del estado de los jugadores
 
-## To Do
-
-* Dreadnought:
-	* Coreografía en EventManager
-
-* Calibrar puntajes
-
------------------------- dejado atras
-
-* Ataques Dreadnought:   ?? quizás no.
-	* Bullet:
-		rigid body 2d con autofree
-	* WideBeam Dreadnaught:
-		"" raycast desde player a dreadnaught.
-		
+* API:
+	* esperando a respuesta de incorporar en Chimera Party
