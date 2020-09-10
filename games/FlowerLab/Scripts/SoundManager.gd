@@ -35,3 +35,25 @@ func _auto_play_environment():
 
 func _ready():
 	_auto_play_environment()
+
+func _on_all_players_died(variable):
+	_stop_gameplay_music()
+	$Timer.start()
+
+export var db_scores = -10
+func _on_Timer_timeout():	
+	$Music/gameplayMusic.set_stream_paused(false)
+	#_play_score_music()
+	$Music/gameplayMusic.set_volume_db(db_scores)
+
+func _play_gameplay_music():
+	$Music/gameplayMusic.play()
+
+func _stop_gameplay_music():
+	$Music/gameplayMusic.set_stream_paused(true)
+
+func _play_score_music():
+	$Music/scoreMusic.play()
+
+func _stop_score_music():
+	$Music/scoreMusic.stop()

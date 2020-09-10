@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://games/FlowerLab/index.gd" type="Script" id=1]
 [ext_resource path="res://games/FlowerLab/Sprites/Dark15.png" type="Texture" id=2]
@@ -16,9 +16,13 @@
 [ext_resource path="res://games/FlowerLab/Sprites/INVASION2000.TTF" type="DynamicFontData" id=14]
 [ext_resource path="res://games/FlowerLab/Sprites/gameplay_score.tres" type="DynamicFont" id=15]
 [ext_resource path="res://games/FlowerLab/TimerDisplay.gd" type="Script" id=16]
+[ext_resource path="res://games/FlowerLab/Audio/Dash Runner.wav" type="AudioStream" id=17]
+[ext_resource path="res://games/FlowerLab/Audio/Hensel Schwanenlied-8bit.wav" type="AudioStream" id=18]
 
 [sub_resource type="DynamicFont" id=1]
 size = 70
+outline_size = 5
+outline_color = Color( 0.917647, 0, 0.796078, 1 )
 extra_spacing_top = 10
 font_data = ExtResource( 14 )
 
@@ -84,8 +88,16 @@ __meta__ = {
 
 [node name="SoundManager" type="Node" parent="."]
 script = ExtResource( 7 )
+db_scores = 5
 
 [node name="Music" type="Node" parent="SoundManager"]
+
+[node name="gameplayMusic" type="AudioStreamPlayer" parent="SoundManager/Music"]
+stream = ExtResource( 18 )
+volume_db = -10.0
+
+[node name="scoreMusic" type="AudioStreamPlayer" parent="SoundManager/Music"]
+stream = ExtResource( 17 )
 
 [node name="SFX" type="Node" parent="SoundManager"]
 
@@ -105,6 +117,10 @@ stream = ExtResource( 11 )
 
 [node name="VacuumStart" type="AudioStreamPlayer" parent="SoundManager/Environment"]
 stream = ExtResource( 6 )
+
+[node name="Timer" type="Timer" parent="SoundManager"]
+wait_time = 1.5
+one_shot = true
 
 [node name="Spawn" type="Node2D" parent="."]
 script = ExtResource( 4 )
@@ -369,11 +385,13 @@ one_shot = true
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 [connection signal="all_players_died" from="." to="EventManager" method="_end_times"]
+[connection signal="all_players_died" from="." to="SoundManager" method="_on_all_players_died"]
 [connection signal="final_score" from="." to="GUI" method="on_ending"]
 [connection signal="player_died" from="." to="GUI" method="_on_player_death"]
 [connection signal="score_changed" from="." to="GUI" method="_change_score"]
 [connection signal="timeout" from="EndTimer" to="." method="_on_timeout"]
 [connection signal="finished" from="SoundManager/Environment/VacuumStart" to="SoundManager" method="_auto_play_environment"]
+[connection signal="timeout" from="SoundManager/Timer" to="SoundManager" method="_on_Timer_timeout"]
 [connection signal="timeout" from="Spawn/Timer" to="Spawn" method="_on_Timer_timeout"]
 [connection signal="activate_dreadnought_physics" from="EventManager" to="DreadNoughtSpawn" method="_on_EventManager_activate_dreadnought_physics"]
 [connection signal="array_placed_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_array_placed_asteroids"]
@@ -396,6 +414,7 @@ one_shot = true
 [connection signal="simetric_random_asteroids" from="EventManager" to="Spawn" method="_on_EventManager_simetric_random_asteroids"]
 [connection signal="spawn_dreadnought" from="EventManager" to="DreadNoughtSpawn" method="_on_spawn_dreadnought"]
 [connection signal="start_dreadnought_lasers" from="EventManager" to="DreadNoughtSpawn" method="_on_start_lasers"]
+[connection signal="start_gameplay_music" from="EventManager" to="SoundManager" method="_play_gameplay_music"]
 [connection signal="stop_dreadnought_lasers" from="EventManager" to="DreadNoughtSpawn" method="_on_stop_lasers"]
 [connection signal="timeout" from="EventManager/customTimer" to="EventManager" method="_its_timeout"]
 [connection signal="freeze_timer" from="GUI" to="GUI/MarginContainer/HBoxContainer/VBoxContainer2/infDer/TimerDisplay" method="_on_freeze"]

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Hensel Schwanenlied-8bit.wav-a765a87243d2459b9b4094ca95cf1e16.sample"
+
+[deps]
+
+source_file="res://games/FlowerLab/Audio/Hensel Schwanenlied-8bit.wav"
+dest_files=[ "res://.import/Hensel Schwanenlied-8bit.wav-a765a87243d2459b9b4094ca95cf1e16.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

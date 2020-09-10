@@ -54,7 +54,8 @@ func _event_launcher():
 		1:
 			if test_events:
 				return _test_events()
-			emit_signal("display_message","START!")
+			emit_signal("start_gameplay_music")
+			emit_signal("display_message","   START!")
 			emit_signal("normal_random_asteroids",0.3)
 			emit_signal("set_asteroid_speed",100)
 			time = 3
@@ -201,3 +202,5 @@ signal hide_message
 
 # laser types:
 # nearest,everyone,farthest,type1,type2,type3,type4
+
+signal start_gameplay_music

@@ -28,6 +28,7 @@ func _ready():
 
 func _on_players_death():
 	$EndTimer.stop()
+	emit_signal("stop_gameplay_music")
 	#wait a bit and then call _on_game_finish()
 	pass
 
