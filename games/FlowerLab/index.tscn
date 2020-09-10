@@ -88,13 +88,12 @@ __meta__ = {
 
 [node name="SoundManager" type="Node" parent="."]
 script = ExtResource( 7 )
-db_scores = 5
 
 [node name="Music" type="Node" parent="SoundManager"]
 
 [node name="gameplayMusic" type="AudioStreamPlayer" parent="SoundManager/Music"]
 stream = ExtResource( 18 )
-volume_db = -10.0
+volume_db = -15.0
 
 [node name="scoreMusic" type="AudioStreamPlayer" parent="SoundManager/Music"]
 stream = ExtResource( 17 )
