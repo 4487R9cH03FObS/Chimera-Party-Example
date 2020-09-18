@@ -70,7 +70,8 @@ func _physics_process(delta):
 		$Sprite.flip_h = false
 	
 	if Input.is_action_just_pressed(action_a):
-		$Sprite.flip_v = !$Sprite.flip_v
+		#$Sprite.flip_v = !$Sprite.flip_v
+		pass
 	
 	if _is_somewhat_out_of_bounds():
 		emit_signal("somewhat_out_of_bounds")

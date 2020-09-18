@@ -190,13 +190,13 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="GUI/MarginContainer/HBoxContainer"]
 margin_left = 177.0
-margin_right = 1741.0
+margin_right = 1742.0
 margin_bottom = 1080.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 9.0
 
 [node name="supCent" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
-margin_right = 1564.0
+margin_right = 1565.0
 margin_bottom = 56.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
@@ -204,13 +204,13 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="gameplay" type="VBoxContainer" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
 margin_top = 60.0
-margin_right = 1564.0
+margin_right = 1565.0
 margin_bottom = 1019.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.5
 
 [node name="scoreLabel" type="RichTextLabel" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3/gameplay"]
-margin_right = 1564.0
+margin_right = 1565.0
 margin_bottom = 959.0
 size_flags_horizontal = 7
 size_flags_vertical = 7
@@ -219,7 +219,7 @@ bbcode_enabled = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3"]
 margin_top = 1023.0
-margin_right = 1564.0
+margin_right = 1565.0
 margin_bottom = 1080.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.5
@@ -311,7 +311,7 @@ custom_fonts/normal_font = ExtResource( 15 )
 
 [node name="P4" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer3/HBoxContainer"]
 margin_left = 1176.0
-margin_right = 1564.0
+margin_right = 1565.0
 margin_bottom = 57.0
 size_flags_horizontal = 3
 color = Color( 0, 0, 0, 1 )
@@ -337,27 +337,27 @@ margin_bottom = 40.0
 custom_fonts/normal_font = ExtResource( 15 )
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="GUI/MarginContainer/HBoxContainer"]
-margin_left = 1745.0
+margin_left = 1746.0
 margin_right = 1920.0
 margin_bottom = 1080.0
 size_flags_horizontal = 3
 
 [node name="supDer" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
-margin_right = 175.0
+margin_right = 174.0
 margin_bottom = 357.0
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
 
 [node name="centDer" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
 margin_top = 361.0
-margin_right = 175.0
+margin_right = 174.0
 margin_bottom = 718.0
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
 
 [node name="infDer" type="ColorRect" parent="GUI/MarginContainer/HBoxContainer/VBoxContainer2"]
 margin_top = 722.0
-margin_right = 175.0
+margin_right = 174.0
 margin_bottom = 1080.0
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
@@ -383,8 +383,8 @@ one_shot = true
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
-[connection signal="all_players_died" from="." to="EventManager" method="_end_times"]
 [connection signal="all_players_died" from="." to="SoundManager" method="_on_all_players_died"]
+[connection signal="all_players_died" from="." to="EventManager" method="_end_times"]
 [connection signal="final_score" from="." to="GUI" method="on_ending"]
 [connection signal="player_died" from="." to="GUI" method="_on_player_death"]
 [connection signal="score_changed" from="." to="GUI" method="_change_score"]
