@@ -18,9 +18,10 @@ func init():
 	pass
 
 var _d_dtposition = Vector2() 
-var alpha = 10
+var _alpha = 10
 
 var _target_light = 1
+
 
 func set_target_light_energy(amount):
 	_target_light = amount
@@ -36,8 +37,11 @@ func _physics_process(delta):
 
 func _do_physics(_delta):
 	# solve dposition/dt = alpha*(target_position-position) , alpha>0
-	_d_dtposition = alpha*(_target_position-position)
+	_d_dtposition = _alpha*(_target_position-position)
 	_d_dtposition = move_and_slide(_d_dtposition)
+
+func set_alpha(value):
+	_alpha = value
 
 var _target_position = position
 

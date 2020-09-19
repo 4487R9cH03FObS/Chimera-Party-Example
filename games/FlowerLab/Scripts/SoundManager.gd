@@ -57,3 +57,6 @@ func _play_score_music():
 
 func _stop_score_music():
 	$Music/scoreMusic.stop()
+
+func _on_gameplayMusic_finished():
+	_play_gameplay_music()

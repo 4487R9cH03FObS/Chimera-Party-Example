@@ -383,12 +383,13 @@ one_shot = true
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
-[connection signal="all_players_died" from="." to="SoundManager" method="_on_all_players_died"]
 [connection signal="all_players_died" from="." to="EventManager" method="_end_times"]
+[connection signal="all_players_died" from="." to="SoundManager" method="_on_all_players_died"]
 [connection signal="final_score" from="." to="GUI" method="on_ending"]
 [connection signal="player_died" from="." to="GUI" method="_on_player_death"]
 [connection signal="score_changed" from="." to="GUI" method="_change_score"]
 [connection signal="timeout" from="EndTimer" to="." method="_on_timeout"]
+[connection signal="finished" from="SoundManager/Music/gameplayMusic" to="SoundManager" method="_on_gameplayMusic_finished"]
 [connection signal="finished" from="SoundManager/Environment/VacuumStart" to="SoundManager" method="_auto_play_environment"]
 [connection signal="timeout" from="SoundManager/Timer" to="SoundManager" method="_on_Timer_timeout"]
 [connection signal="timeout" from="Spawn/Timer" to="Spawn" method="_on_Timer_timeout"]
@@ -405,6 +406,7 @@ one_shot = true
 [connection signal="set_asteroid_speed" from="EventManager" to="Spawn" method="_on_EventManager_set_asteroid_speed"]
 [connection signal="set_dreadnought_light_energy" from="EventManager" to="DreadNoughtSpawn" method="_on_set_light_energy"]
 [connection signal="set_dreadnought_scale" from="EventManager" to="DreadNoughtSpawn" method="_on_set_scale"]
+[connection signal="set_dreadnought_tension" from="EventManager" to="DreadNoughtSpawn" method="_on_set_dreadnought_tension"]
 [connection signal="set_laser_pattern" from="EventManager" to="DreadNoughtSpawn" method="_on_set_pattern"]
 [connection signal="set_laser_pattern_time" from="EventManager" to="DreadNoughtSpawn" method="_on_set_laser_pattern_time"]
 [connection signal="set_laser_speed" from="EventManager" to="DreadNoughtSpawn" method="_on_set_laser_speed"]

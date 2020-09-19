@@ -71,4 +71,7 @@ func _on_EventManager_activate_dreadnought_physics(value):
 	if _current!=null:
 		_current.activate_physics(value)
 
+func _on_set_dreadnought_tension(value):
+	if _current!=null:
+		_current.set_alpha(value)
 
