@@ -129,7 +129,7 @@ func _event_launcher():
 		16:
 			emit_signal("normal_random_asteroids",0.4)
 			emit_signal("set_asteroid_speed",600)
-			emit_signal("set_laser_pattern","type2",0.5,0.05,50)
+			emit_signal("set_laser_pattern","type2",0.5,0.03,50)
 			time = 2
 		17:
 			emit_signal("simetric_random_asteroids",0.4)
@@ -154,15 +154,15 @@ func _event_launcher():
 			time = 2
 		22:
 			emit_signal("move_dreadnought_to",top_center-40*Vector2.LEFT)
-			time = 1
+			time = 0.5
 		23:
 			emit_signal("move_dreadnought_to",top_center+40*Vector2.LEFT)
-			time = 1
+			time = 0.5
 		24:
-			emit_signal("move_dreadnought_to",top_center-40*Vector2.LEFT)
+			emit_signal("move_dreadnought_to",top_center-60*Vector2.LEFT)
 			time = 0.5
 		25:
-			emit_signal("move_dreadnought_to",top_center+40*Vector2.LEFT)
+			emit_signal("move_dreadnought_to",top_center+60*Vector2.LEFT)
 			time = 0.5
 		26:
 			emit_signal("move_dreadnought_to",top_left)
@@ -206,10 +206,67 @@ func _event_launcher():
 		39:
 			emit_signal("move_dreadnought_to",center)
 			time = 4
-		39:
-			emit_signal("set_laser_speed",50)
+		40:
 			emit_signal("set_laser_pattern","type2",2,0.05,50)
+			emit_signal("set_laser_speed",50)
+			emit_signal("start_dreadnought_lasers")
 			time = 4
+		41:
+			emit_signal("set_laser_pattern","type2",2,0.05,50)
+			emit_signal("set_laser_speed",50)
+			time = 4
+		42:
+			emit_signal("array_placed_asteroids",[-700,-300,300,700],0.5)
+			emit_signal("set_laser_pattern","type3",1,0.2,200)
+			time = 4
+		43:
+			emit_signal("array_placed_asteroids",[-600,-300,300,600],0.5)
+			time = 2
+		44:
+			emit_signal("array_placed_asteroids",[-600,-200,200,600],0.5)
+			time = 2
+		45:
+			emit_signal("array_placed_asteroids",[-500,-200,200,500],0.5)
+			time = 1
+		46:
+			emit_signal("array_placed_asteroids",[-600,-300,300,600],0.5)
+			time = 1
+		47:
+			emit_signal("array_placed_asteroids",[-700,-400,400,700],0.3)
+			emit_signal("stop_dreadnought_lasers")
+			time = 2
+		48:
+			emit_signal("array_placed_asteroids",[-700,-500,500,700],0.3)
+			time = 2
+		49:
+			emit_signal("array_placed_asteroids",[-700,-600,600,700],0.3)
+			time = 3
+		50:
+			emit_signal("move_dreadnought_to",top_center)
+			time = 3
+		51:
+			emit_signal("normal_random_asteroids",0.01)
+			emit_signal("set_asteroid_speed",400)
+			time = 5
+		52:
+			emit_signal("move_dreadnought_to",top_left)
+			time = 5
+		53:
+			emit_signal("move_dreadnought_to",top_center)
+			emit_signal("set_asteroid_speed",500)
+			time = 5
+		54:
+			emit_signal("move_dreadnought_to",top_right)
+			time = 5
+		55:
+			emit_signal("move_dreadnought_to",top_center)
+			emit_signal("set_asteroid_speed",600)
+			time = 5
+		56:
+			emit_signal("set_laser_pattern","type2",0.127231,0.05,100)
+			emit_signal("start_dreadnought_lasers")
+			external_event_changer(9)
+			time = 5
 		_:
 			_end_times()
 	return time

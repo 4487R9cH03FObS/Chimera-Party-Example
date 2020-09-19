@@ -18,8 +18,8 @@ var groups = [[0, 1, 2, 3]]
 var _players: Array = [] setget , get_players
 
 func load_test():
-	_players = [{"color": 2, "points": 0},{"color": -1, "points": 0},\
-	 {"color": 0, "points": 0}, {"color": 1, "points": 0}]
+	_players = [{"color": -1, "points": 0},{"color": -1, "points": 0},\
+	 {"color": -1, "points": 0}, {"color": 0, "points": 0}]
 
 	# player 0
 	_action_add_key("move_left_", 0, KEY_A)
