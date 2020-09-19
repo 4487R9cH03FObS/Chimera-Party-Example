@@ -22,7 +22,7 @@ mode = 2
 contacts_reported = 1
 contact_monitor = true
 script = ExtResource( 2 )
-_max_health = 500.0
+_max_health = 750.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2( 0.510162, -0.0670128 )

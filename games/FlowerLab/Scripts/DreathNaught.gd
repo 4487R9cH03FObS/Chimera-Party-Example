@@ -45,6 +45,7 @@ func set_target_position(target):
 	_target_position = target
 	pass
 
+# cases have not been defined!!!
 func set_target_position_by_name(name):
 	var target_position = null
 	match name:
