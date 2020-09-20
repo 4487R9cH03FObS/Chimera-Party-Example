@@ -383,8 +383,8 @@ one_shot = true
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
-[connection signal="all_players_died" from="." to="EventManager" method="_end_times"]
 [connection signal="all_players_died" from="." to="SoundManager" method="_on_all_players_died"]
+[connection signal="all_players_died" from="." to="EventManager" method="_end_times"]
 [connection signal="final_score" from="." to="GUI" method="on_ending"]
 [connection signal="player_died" from="." to="GUI" method="_on_player_death"]
 [connection signal="score_changed" from="." to="GUI" method="_change_score"]

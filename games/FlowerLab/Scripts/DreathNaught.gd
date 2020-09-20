@@ -3,6 +3,8 @@ extends KinematicBody2D
 onready var players_node = get_parent().get_parent().get_node("Players")
 ## get on instancing
 
+onready var root_node = get_tree().get_root().find_node("Main",true,false)
+
 var laser= preload("res://games/FlowerLab/Scenes/Laser.tscn")
 #var bullet= preload("res://games/FlowerLab/Scenes/Laser.tscn")
 onready var phase_timer = $PhaseTimer
@@ -222,9 +224,11 @@ func _re_start_lasers():
 	_laser_sender()
 
 onready var pewSound = $pewSound
+
 func _send_laser():
 	var new_laser = laser.instance()
 	add_child(new_laser)
+	#root_node.add_child(new_laser)
 	new_laser.init(_current_launch_direction,_laser_speed)
 	pewSound.play()
 	
