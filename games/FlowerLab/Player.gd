@@ -60,7 +60,12 @@ func init(player_index, player_color):
 
 func _physics_process(delta):
 	get_target_acceleration()
-	apply_central_impulse(target_acceleration*delta)
+
+	if Input.is_action_pressed(action_a):
+		apply_central_impulse(target_acceleration*delta*action_acceleration_multiplier)
+	else:
+		apply_central_impulse(target_acceleration*delta)
+
 	if linear_velocity.length()>max_speed:
 		linear_velocity=linear_velocity.normalized()*max_speed
 	
@@ -69,9 +74,6 @@ func _physics_process(delta):
 	if Input.is_action_pressed(move_right) and not Input.is_action_pressed(move_left):
 		$Sprite.flip_h = false
 	
-	if Input.is_action_just_pressed(action_a):
-		#$Sprite.flip_v = !$Sprite.flip_v
-		pass
 	
 	if _is_somewhat_out_of_bounds():
 		emit_signal("somewhat_out_of_bounds")
@@ -85,6 +87,7 @@ func _physics_process(delta):
 
 ### Physics
 
+export var action_acceleration_multiplier = 0.3
 export (int) var max_speed = 550
 export (float,0,1,0.1) var damp = 5
 export (float,0,1,0.1) var weightness = 1
