@@ -28,7 +28,6 @@ _global_script_class_icons={
 
 config/name="Spaceships"
 run/main_scene="res://games/FlowerLab/index.tscn"
-config/icon="res://icon.png"
 
 [autoload]
 

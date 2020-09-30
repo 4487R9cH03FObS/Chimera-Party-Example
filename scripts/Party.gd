@@ -18,32 +18,36 @@ var groups = [[0, 1, 2, 3]]
 var _players: Array = [] setget , get_players
 
 func load_test():
-	_players = [{"color": -1, "points": 0},{"color": -1, "points": 0},\
-	 {"color": -1, "points": 0}, {"color": 0, "points": 0}]
+	_players = [{"color": 0, "points": 0},{"color": 1, "points": 0},\
+	 {"color": 2, "points": 0}, {"color": 3, "points": 0}]
 
 	# player 0
 	_action_add_key("move_left_", 0, KEY_A)
 	_action_add_key("move_right_", 0, KEY_D)
 	_action_add_key("move_up_", 0, KEY_W)
 	_action_add_key("move_down_", 0, KEY_S)
-	_action_add_key("action_a_", 0, KEY_B)
-	_action_add_key("action_b_", 0, KEY_N)
+	_action_add_key("action_a_", 0, KEY_Z)
 	
+	# player 1
+	_action_add_key("move_left_", 1, KEY_F)
+	_action_add_key("move_right_", 1, KEY_H)
+	_action_add_key("move_up_", 1, KEY_T)
+	_action_add_key("move_down_", 1, KEY_G)
+	_action_add_key("action_a_", 1, KEY_B)
+
 	#player 2
 	_action_add_key("move_left_", 2, KEY_J)
 	_action_add_key("move_right_", 2, KEY_L)
 	_action_add_key("move_up_", 2, KEY_I)
 	_action_add_key("move_down_", 2, KEY_K)
-	_action_add_key("action_a_", 2, KEY_Z)
-	_action_add_key("action_b_", 2, KEY_X)
+	_action_add_key("action_a_", 2, KEY_M)
 	
 	#player 3
 	_action_add_key("move_left_", 3, KEY_LEFT)
 	_action_add_key("move_right_", 3, KEY_RIGHT)
 	_action_add_key("move_up_", 3, KEY_UP)
 	_action_add_key("move_down_", 3, KEY_DOWN)
-	_action_add_key("action_a_", 3, KEY_C)
-	_action_add_key("action_b_", 3, KEY_V)
+	_action_add_key("action_a_", 3, KEY_0)
 
 func get_players():
 	return _players
